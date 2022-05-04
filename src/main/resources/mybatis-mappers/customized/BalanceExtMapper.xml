@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xlw.demo.persist.customized.mapper.BalanceExtMapper">
+
+    <insert id="insert" parameterType="com.xlw.demo.persist.customized.entity.BalanceEntity">
+    insert into t_bank_balance (SORT, TRAN_NET_CODE, SUB_ACCT_NO,AMOUNT, COMPANY_ID)
+    values
+    (#{sort,jdbcType=VARCHAR}, #{tranNetCode,jdbcType=CHAR}, #{subAcctNo,jdbcType=VARCHAR},
+    #{amount,jdbcType=DECIMAL}, #{companyId,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="batchInsertBalance" parameterType="java.util.List" >
+        insert into t_bank_balance (SORT, TRAN_NET_CODE, SUB_ACCT_NO,AMOUNT, COMPANY_ID)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.sort,jdbcType=VARCHAR}, #{item.tranNetCode,jdbcType=CHAR}, #{item.subAcctNo,jdbcType=VARCHAR},
+            #{item.amount,jdbcType=DECIMAL}, #{item.companyId,jdbcType=VARCHAR})
+        </foreach>
+    </insert>
+
+    <!-- 卖家名称：查询余额对账文件中的卖家  && 账户余额不为0-->
+    <select id="querySellerBalance" resultType="com.xlw.demo.persist.customized.entity.SellerBalanceEntity">
+
+	select account.SUB_ACCT_NAME AS 'companyName' ,banlance.AMOUNT AS 'amount'  from (select * from t_bank_balance where AMOUNT > 0 and COMPANY_ID in (select COMPANY_ID from t_bank_balance where TRAN_NET_CODE REGEXP '^SH_' group by COMPANY_ID) order by COMPANY_ID) banlance left join t_pay_account account on banlance.COMPANY_ID = account.PLAT_CUST_ID where account.BANK_CUST_ID REGEXP '^SH_';
+
+    </select>
+
+    <delete id="deleteAll">
+        delete from t_bank_balance
+    </delete>
+</mapper>

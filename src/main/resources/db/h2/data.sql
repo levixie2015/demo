@@ -1,0 +1,1 @@
+INSERT INTO `product`(`id`, `product_name`, `stock`, `version`) VALUES (1, '大礼包1', 5, 0);

@@ -1,0 +1,27 @@
+spring:
+  ##http://本地端口/h2-console 通过项目来进行访问数据库
+  h2:
+    console:
+      enabled: true
+        #进行该配置，你就可以通过YOUR_URL/h2访问h2 web consloe。YOUR_URL是你程序的访问URl。默认为/h2-console
+      path: /h2
+      # 进行该配置后，h2 web consloe就可以在远程访问了。否则只能在本机访问。
+      settings:
+        web-allow-others: true
+  datasource:
+    #表明使用的数据库平台是h2
+    platform: h2
+    #数据库驱动：h2
+    driver-class-name: org.h2.Driver
+    #配置h2数据库的连接地址 库名：test
+    # Embedded 嵌入式
+    # Remote (client/server) 远程连接
+    # In-Memory 内存    过url后缀MODE参数来设置H2可以兼容数据库
+    url: jdbc:h2:mem:test;MODE=MySQL;DATABASE_TO_LOWER=TRUE
+    schema: classpath:db/h2/schema.sql
+    data: classpath:db/h2/data.sql
+    initialization-mode: always
+    username: sa
+    password: sa
+    hikari:
+      connection-test-query: select 1
