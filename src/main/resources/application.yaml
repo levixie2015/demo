@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: dev
+    active: test
   redis:
     port: 6379
     database: 0

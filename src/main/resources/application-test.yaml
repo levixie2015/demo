@@ -1,8 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.80.130:3306/dev_user?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&useSSL=false
+#     url: jdbc:mysql://192.168.80.130:3306/dev_user?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&useSSL=false
+    url: jdbc:mysql://127.0.0.1:3306/dev_user?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&useSSL=false
     username: root
-    password: 111111
+    password: 123456
     hikari:
       connection-test-query: select 1
