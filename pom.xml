@@ -51,31 +51,31 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.47</version>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.redisson</groupId>
-            <artifactId>redisson-spring-boot-starter</artifactId>
-            <version>3.17.1</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>redisson-spring-data-25</artifactId>
-                    <groupId>org.redisson</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>redisson-spring-data-22</artifactId>
-                    <groupId>org.redisson</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.redisson</groupId>
-            <!-- for Spring Data Redis v.2.6.x -->
-            <artifactId>redisson-spring-data-26</artifactId>
-            <version>3.17.1</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-data-redis</artifactId>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.redisson</groupId>-->
+<!--            <artifactId>redisson-spring-boot-starter</artifactId>-->
+<!--            <version>3.17.1</version>-->
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <artifactId>redisson-spring-data-25</artifactId>-->
+<!--                    <groupId>org.redisson</groupId>-->
+<!--                </exclusion>-->
+<!--                <exclusion>-->
+<!--                    <artifactId>redisson-spring-data-22</artifactId>-->
+<!--                    <groupId>org.redisson</groupId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.redisson</groupId>-->
+<!--            &lt;!&ndash; for Spring Data Redis v.2.6.x &ndash;&gt;-->
+<!--            <artifactId>redisson-spring-data-26</artifactId>-->
+<!--            <version>3.17.1</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.aliyun.oss</groupId>
             <artifactId>aliyun-sdk-oss</artifactId>
