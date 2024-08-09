@@ -98,6 +98,11 @@ public class OperatorTest {
         }
     }
 
+    /**
+     * 关于不定参数的使用
+     *
+     * @throws Exception
+     */
     @Test
     public void testMethodReplace() throws Exception {
         ExpressRunner runner = new ExpressRunner();
