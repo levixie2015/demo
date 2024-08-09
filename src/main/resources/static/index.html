@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <title>书籍</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css">
+    <!-- import JavaScript -->
+    <script src="https://unpkg.com/element-plus"></script>
+    <script src="https://unpkg.com/vue-router@4"></script>
+</head>
+<body>
+<div id="app">
+    <h1>{{title}}</h1>
+    <el-table :data="books">
+        <el-table-column v-for="book in cols" :key="book.en"
+                         :prop="book.en"
+                         :label="book.cn"
+                         show-overflow-tooltip align="center" width="160px">
+            <template #default="scope">
+                {{ scope.row[book.en] }}
+            </template>
+        </el-table-column>
+    </el-table>
+</div>
+<script>
+    const {createApp} = Vue
+    var app = createApp({
+        data() {
+            return {
+                title: "我的书籍",
+                cols: [{"en": "bookId", "cn": "编号"}, {"en": "bookTitle", "cn": "书名"}],
+                books: []
+            }
+        },
+        mounted() {
+            axios
+                .get('http://localhost:8080/book/books')
+                .then(response => (
+                    this.books = response.data
+                )).catch(function (error) { // 请求失败处理
+                console.log(error);
+            });
+        }
+    }).use(ElementPlus).mount('#app')
+</script>
+</body>
+</html>
