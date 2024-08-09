@@ -1,12 +1,14 @@
 package com.xlw.demo.QLExpress.customOperator;
 
 import com.ql.util.express.DefaultContext;
+import com.ql.util.express.DynamicParamsUtil;
 import com.ql.util.express.ExpressRunner;
 import com.ql.util.express.IExpressContext;
+import org.junit.jupiter.api.Test;
 
 public class OperatorTest {
 
-    @org.junit.jupiter.api.Test
+    @Test
     public void addOperatorTest() throws Exception {
         //(1)addOperator
         ExpressRunner runner = new ExpressRunner();
@@ -16,7 +18,7 @@ public class OperatorTest {
         System.out.println(r); // 返回结果 [1, 2, 3]
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     public void replaceOperatorTest() throws Exception {
         //(2)replaceOperator
         ExpressRunner runner = new ExpressRunner();
@@ -26,7 +28,7 @@ public class OperatorTest {
         System.out.println(r); // 返回结果 [1, 2, 3]
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     public void addFunctionTest() throws Exception {
         //(3)addFunction
         ExpressRunner runner = new ExpressRunner();
@@ -41,7 +43,7 @@ public class OperatorTest {
      *
      * @throws Exception
      */
-    @org.junit.jupiter.api.Test
+    @Test
     public void addFunctionOfClass() throws Exception {
         ExpressRunner runner = new ExpressRunner();
         DefaultContext<String, Object> context = new DefaultContext<String, Object>();
@@ -61,7 +63,7 @@ public class OperatorTest {
      *
      * @throws Exception
      */
-    @org.junit.jupiter.api.Test
+    @Test
     public void macroTest() throws Exception {
         ExpressRunner runner = new ExpressRunner();
         runner.addMacro("计算平均成绩", "(语文+数学+英语)/3.0");
@@ -72,5 +74,51 @@ public class OperatorTest {
         context.put("英语", 95);
         Object result = runner.execute("是否优秀", context, null, false, false);
         System.out.println(result);//返回结果true
+    }
+
+    /**
+     * 编译脚本，查询外部需要定义的变量和函数
+     * <pre>
+     *   输出结果：
+     *         var : 数学
+     *         var : 综合考试
+     *         var : 英语
+     *         var : 语文
+     * </pre>
+     *
+     * @throws Exception
+     */
+    @Test
+    public void varTest() throws Exception {
+        String express = "int 平均分 = (语文 + 数学 + 英语 + 综合考试.科目2) / 4.0; return 平均分";
+        ExpressRunner runner = new ExpressRunner(true, true);
+        String[] names = runner.getOutVarNames(express);
+        for (String s : names) {
+            System.out.println("var : " + s);
+        }
+    }
+
+    @Test
+    public void testMethodReplace() throws Exception {
+        ExpressRunner runner = new ExpressRunner();
+        IExpressContext<String, Object> expressContext = new DefaultContext<String, Object>();
+        runner.addFunctionOfServiceMethod("getTemplate", this, "getTemplate", new Class[]{Object[].class}, null);
+
+        //(1)默认的不定参数可以使用数组来代替
+        Object r = runner.execute("getTemplate([11,'22', 33L, true])", expressContext, null, false, false);
+        System.out.println(r);
+        //(2)像java一样,支持函数动态参数调用,需要打开以下全局开关,否则以下调用会失败
+        DynamicParamsUtil.supportDynamicParams = true;
+        r = runner.execute("getTemplate(11, '22', 33L, true)", expressContext, null, false, false);
+        System.out.println(r);
+    }
+
+    //等价于getTemplate(Object[] params)
+    public Object getTemplate(Object... params) throws Exception {
+        String result = "";
+        for (Object obj : params) {
+            result = result + obj + ",";
+        }
+        return result;
     }
 }
