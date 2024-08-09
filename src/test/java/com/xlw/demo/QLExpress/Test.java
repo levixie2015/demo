@@ -57,6 +57,22 @@ public class Test {
         System.out.println(result);
     }
 
+    /**
+     * 替换 if then else 等关键字
+     */
+    @org.junit.jupiter.api.Test
+    public void test3() throws Exception {
+        ExpressRunner runner = new ExpressRunner();
+        runner.addOperatorWithAlias("如果", "if", null);
+        runner.addOperatorWithAlias("则", "then", null);
+        runner.addOperatorWithAlias("否则", "else", null);
+
+        String express = "如果 (语文 + 数学 + 英语 > 270) 则 {return 1;} 否则 {return 0;}";
+        DefaultContext<String, Object> context = new DefaultContext<String, Object>();
+        Object result = runner.execute(express, context, null, false, false, -1);
+        System.out.println(result);
+    }
+
     public Object testIf(Map<String, Object> rule, Map<String, Object> parameters) throws Exception {
         // 根据 Map 对象动态生成 QLExpress 表达式
         String condition = (String) rule.get("condition");
