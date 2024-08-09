@@ -1,0 +1,18 @@
+@startuml
+participant Participant as Foo
+actor Actor as Foo1
+boundary Boodary as Foo2
+control Control as Foo3
+entity Entity as Foo4
+database Database as Foo5
+collections Collections as Foo6
+queue Queue as Foo7
+
+Foo->Foo1:to actor
+Foo->Foo2:to boundary
+Foo-->Foo3:to contol
+Foo->Foo4:to entity
+Foo->Foo5:to database
+Foo->Foo6:to colections
+Foo->Foo7:to queue
+@enduml
