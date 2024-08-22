@@ -46,7 +46,7 @@ public class SpirePdfTest {
         }
 
         //保存PDF文档
-        pdf.saveToFile("/Users/xieliwei/Desktop/电子签章测试/瑞康医药集团河北有限公司_签章.pdf");
+        pdf.saveToFile("/Users/xieliwei/Desktop/电子签章测试/瑞康医药集团河北有限公司_签章SpirePdf.pdf");
 
     }
 

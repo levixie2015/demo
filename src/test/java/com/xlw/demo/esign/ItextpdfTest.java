@@ -81,7 +81,7 @@ public class ItextpdfTest {
 
     public static void main(String[] args) throws IOException, DocumentException {
         String infilePath = "/Users/xieliwei/Desktop/电子签章测试/瑞康医药集团河北有限公司.pdf";
-        String outfilePaht = "/Users/xieliwei/Desktop/电子签章测试/瑞康医药集团河北有限公司_签章.pdf";
+        String outfilePaht = "/Users/xieliwei/Desktop/电子签章测试/瑞康医药集团河北有限公司_签章Itextpdf.pdf";
         String picPath = "/Users/xieliwei/Desktop/电子签章测试/测试章.png";
         stamperCheckMarkPDF(infilePath, outfilePaht, picPath);
     }
