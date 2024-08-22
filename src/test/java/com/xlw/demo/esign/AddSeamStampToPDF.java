@@ -33,18 +33,18 @@ public class AddSeamStampToPDF {
                 float width = page.getMediaBox().getWidth();
                 float height = page.getMediaBox().getHeight();
 
-                // 设置图像在页面上的绝对位置
-                // 这里假设我们想要将图像放置在页面的右下角，但稍微向上和向左偏移一些
-                float imgX = width - stampImage.getWidth();
-                float imgY = height / 2 - stampImage.getHeight() / 2; // 这个位置其实是页面中心偏上，但我们可以根据需要调整
-
-                // 如果你想要图像在页面的右下角，可以这样做：
-                // float imgX = width - img.getWidth() - 10; // 起始x坐标。假设向右偏移10点
-                // float imgY = height - img.getHeight() - 10; // 起始y坐标。假设向下偏移10点
-
                 try (PDPageContentStream contents = new PDPageContentStream(document, page, PDPageContentStream.AppendMode.APPEND, true, true)) {
                     // 这里需要根据跨页效果调整imgX和imgY的值
                     PDImageXObject img = pdImageXObjectList.get(i);
+
+                    // 设置图像在页面上的绝对位置
+                    // 这里假设我们想要将图像放置在页面的右下角，但稍微向上和向左偏移一些
+                    float imgX = width - img.getWidth();
+                    float imgY = height / 2 - img.getHeight() / 2; // 这个位置其实是页面中心偏上，但我们可以根据需要调整
+
+                    // 如果你想要图像在页面的右下角，可以这样做：
+                    // float imgX = width - img.getWidth() - 10; // 起始x坐标。假设向右偏移10点
+                    // float imgY = height - img.getHeight() - 10; // 起始y坐标。假设向下偏移10点
 
                     // 这里我们简单地在每页上绘制相同的图像  
                     contents.drawImage(img, imgX, imgY, img.getWidth(), img.getHeight());
