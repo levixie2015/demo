@@ -6,6 +6,7 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -22,7 +23,8 @@ public class AddSeamStampToPDF {
             // 加载骑缝图章图像  
             PDImageXObject stampImage = PDImageXObject.createFromFile("/Users/xieliwei/Desktop/电子签章测试/测试章.png", document);
 
-            List<PDImageXObject> pdImageXObjectList = slicingImages(document, "/Users/xieliwei/Desktop/电子签章测试/测试章.png", document.getPages().getCount());//生成骑缝章切割图片
+//            List<PDImageXObject> pdImageXObjectList = slicingImages(document, "/Users/xieliwei/Desktop/电子签章测试/测试章.png", document.getPages().getCount());//生成骑缝章切割图片
+            List<PDImageXObject> pdImageXObjectList = getImage(document, "/Users/xieliwei/Desktop/电子签章测试/测试章.png", document.getPages().getCount());//生成骑缝章切割图片
 
             // 遍历PDF的每一页
             for (int i = 0; i < document.getPages().getCount(); i++) {
@@ -78,7 +80,72 @@ public class AddSeamStampToPDF {
             ImageIO.write(subImg, formatName, out);
             PDImageXObject pDImageXObject = PDImageXObject.createFromByteArray(document, out.toByteArray(), formatName);
             pdImageXObjectList.add(pDImageXObject);
+
+            out.flush();
+            out.reset();
         }
         return pdImageXObjectList;
+    }
+
+
+    private static List<PDImageXObject> getImage(PDDocument document, String path, int n) throws IOException {
+        List<PDImageXObject> pdImageXObjectList = new ArrayList<>();
+        BufferedImage[] images = cutImage(document, path, n);
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        //将图片绘制到PDF页面上的指定位置
+        for (int i = 0; i < n; i++) {
+            BufferedImage image = images[i];
+            String formatName = path.substring(path.lastIndexOf('.') + 1);//文件名称
+            ImageIO.write(image, formatName, out);
+            PDImageXObject pDImageXObject = PDImageXObject.createFromByteArray(document, out.toByteArray(), formatName);
+            pdImageXObjectList.add(pDImageXObject);
+            out.flush();
+            out.reset();
+        }
+        return pdImageXObjectList;
+    }
+
+    /**
+     * 定义GetImage方法，根据PDF页数分割印章图片
+     *
+     * @param num
+     * @return
+     * @throws IOException
+     */
+    public static BufferedImage[] cutImage(PDDocument document, String path, int num) throws IOException {
+        String originalImg = "/Users/xieliwei/Desktop/电子签章测试/测试章.png";
+        BufferedImage image = ImageIO.read(new File(originalImg));
+
+        int rows = 1;
+        int cols = num;
+
+        int chunks = rows * cols;
+
+        int chunkWidth = image.getWidth() / cols;
+
+        int chunkHeight = image.getHeight() / rows;
+
+        int count = 0;
+
+        BufferedImage[] imgs = new BufferedImage[chunks];
+
+        for (int x = 0; x < rows; x++) {
+
+            for (int y = 0; y < cols; y++) {
+
+                imgs[count] = new BufferedImage(chunkWidth, chunkHeight, image.getType());
+
+                Graphics2D gr = imgs[count++].createGraphics();
+
+                gr.drawImage(image, 0, 0, chunkWidth, chunkHeight,
+
+                        chunkWidth * y, chunkHeight * x,
+
+                        chunkWidth * y + chunkWidth, chunkHeight * x + chunkHeight, Color.WHITE, null);
+
+                gr.dispose();
+            }
+        }
+        return imgs;
     }
 }
