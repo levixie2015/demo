@@ -19,16 +19,16 @@ public class ItextpdfTest {
     /**
      * 切割图片
      *
-     * @param Path 图片路径
+     * @param path 图片路径
      * @param n    切割份数
      * @return itextPdf的Image[]
      * @throws IOException
      * @throws BadElementException
      */
-    public static Image[] slicingImages(String Path, int n) throws IOException, BadElementException {
+    public static Image[] slicingImages(String path, int n) throws IOException, BadElementException {
         Image[] nImage = new Image[n];
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        BufferedImage img = ImageIO.read(new File(Path));
+        BufferedImage img = ImageIO.read(new File(path));
         int h = img.getHeight();
         int w = img.getWidth();
 
@@ -41,7 +41,7 @@ public class ItextpdfTest {
                 subImg = img.getSubimage(i * sw, 0, sw, h);
             }
 
-            ImageIO.write(subImg, Path.substring(Path.lastIndexOf('.') + 1), out);
+            ImageIO.write(subImg, path.substring(path.lastIndexOf('.') + 1), out);
             nImage[i] = Image.getInstance(out.toByteArray());
             out.flush();
             out.reset();
