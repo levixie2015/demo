@@ -51,7 +51,7 @@ public class AddSeamStampToPDF {
             }
 
             // 保存修改后的PDF  
-            document.save("output.pdf");
+            document.save("/Users/xieliwei/Desktop/电子签章测试/output.pdf");
         } catch (IOException e) {
             e.printStackTrace();
         }
