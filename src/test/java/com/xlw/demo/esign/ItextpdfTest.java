@@ -62,7 +62,7 @@ public class ItextpdfTest {
         PdfReader reader = new PdfReader(infilePath);//选择需要印章的pdf
         PdfStamper stamp = new PdfStamper(reader, new FileOutputStream(outFilePath));//加完印章后的pdf
 
-        Rectangle pageSize = reader.getPageSize(1);//获得第一页
+        Rectangle pageSize = reader.getPageSize(1);//获取第一页（索引从1开始）
         float height = pageSize.getHeight();
         float width = pageSize.getWidth();
 
