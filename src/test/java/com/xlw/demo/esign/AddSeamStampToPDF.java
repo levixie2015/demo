@@ -24,7 +24,7 @@ public class AddSeamStampToPDF {
             PDImageXObject stampImage = PDImageXObject.createFromFile("/Users/xieliwei/Desktop/电子签章测试/测试章.png", document);
 
 //            List<PDImageXObject> pdImageXObjectList = slicingImages(document, "/Users/xieliwei/Desktop/电子签章测试/测试章.png", document.getPages().getCount());//生成骑缝章切割图片
-            List<PDImageXObject> pdImageXObjectList = getImage(document, "/Users/xieliwei/Desktop/电子签章测试/测试章.png", document.getPages().getCount());//生成骑缝章切割图片
+            List<PDImageXObject> pdImageXObjectList = slicingImages2(document, "/Users/xieliwei/Desktop/电子签章测试/测试章.png", document.getPages().getCount());//生成骑缝章切割图片
 
             // 遍历PDF的每一页
             for (int i = 0; i < document.getPages().getCount(); i++) {
@@ -88,7 +88,7 @@ public class AddSeamStampToPDF {
     }
 
 
-    private static List<PDImageXObject> getImage(PDDocument document, String path, int n) throws IOException {
+    private static List<PDImageXObject> slicingImages2(PDDocument document, String path, int n) throws IOException {
         List<PDImageXObject> pdImageXObjectList = new ArrayList<>();
         BufferedImage[] images = cutImage(document, path, n);
         ByteArrayOutputStream out = new ByteArrayOutputStream();
