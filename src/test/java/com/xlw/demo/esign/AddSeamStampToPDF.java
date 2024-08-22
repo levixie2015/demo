@@ -25,7 +25,7 @@ public class AddSeamStampToPDF {
             List<PDImageXObject> pdImageXObjectList = slicingImages(document, "/Users/xieliwei/Desktop/电子签章测试/测试章.png", document.getPages().getCount());//生成骑缝章切割图片
 
             // 遍历PDF的每一页
-            for (int i = 0; i < document.getPages().getCount() - 1; i++) {
+            for (int i = 0; i < document.getPages().getCount(); i++) {
                 PDPage page = document.getPage(i);
                 // 获取页面的宽度和高度（注意：这里获取的是点（pt）单位，1英寸=72点）
                 float width = page.getMediaBox().getWidth();
