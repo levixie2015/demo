@@ -21,6 +21,9 @@ public class ItextpdfTest {
      *
      * @param Path 图片路径
      * @param n    切割份数
+     * @return itextPdf的Image[]
+     * @throws IOException
+     * @throws BadElementException
      */
     public static Image[] slicingImages(String Path, int n) throws IOException, BadElementException {
         Image[] nImage = new Image[n];
@@ -51,6 +54,9 @@ public class ItextpdfTest {
      *
      * @param infilePath  原PDF路径
      * @param outFilePath 输出PDF路径
+     * @param picPath     章图片路径
+     * @throws IOException
+     * @throws DocumentException
      */
     public static void stamperCheckMarkPDF(String infilePath, String outFilePath, String picPath) throws IOException, DocumentException {
         PdfReader reader = new PdfReader(infilePath);//选择需要印章的pdf
