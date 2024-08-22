@@ -5,8 +5,13 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Apache PDFBox中实现骑缝图章（即跨越多页的印章或水印）
@@ -17,8 +22,11 @@ public class AddSeamStampToPDF {
             // 加载骑缝图章图像  
             PDImageXObject stampImage = PDImageXObject.createFromFile("/Users/xieliwei/Desktop/电子签章测试/测试章.png", document);
 
-            // 遍历PDF的每一页  
-            for (PDPage page : document.getPages()) {
+            List<PDImageXObject> pdImageXObjectList = cutPDImageXObjectList(document, "/Users/xieliwei/Desktop/电子签章测试/测试章.png", document.getPages().getCount());//生成骑缝章切割图片
+
+            // 遍历PDF的每一页
+            for (int i = 0; i < document.getPages().getCount() - 1; i++) {
+                PDPage page = document.getPage(i);
                 // 获取页面的宽度和高度（注意：这里获取的是点（pt）单位，1英寸=72点）
                 float width = page.getMediaBox().getWidth();
                 float height = page.getMediaBox().getHeight();
@@ -38,9 +46,7 @@ public class AddSeamStampToPDF {
                     // 你可能需要在第二页上减少y的值并重新计算x以确保对齐  
 
                     // 这里我们简单地在每页上绘制相同的图像  
-                    contents.drawImage(stampImage, imgX, imgY, stampImage.getWidth(), stampImage.getHeight());
-
-                    // 注意：这里没有实现跨页对齐和重叠，你需要自己添加逻辑来实现这一点  
+                    contents.drawImage(pdImageXObjectList.get(i), imgX, imgY, stampImage.getWidth(), stampImage.getHeight());
                 }
             }
 
@@ -49,5 +55,43 @@ public class AddSeamStampToPDF {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private static List<PDImageXObject> cutPDImageXObjectList(PDDocument document, String stampImgPath, int numBlocks) throws IOException {
+        List<BufferedImage> bufferedImages = cutImages(stampImgPath, numBlocks);
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+        List<PDImageXObject> pdImageXObjectList = new ArrayList<>();
+        for (BufferedImage img : bufferedImages) {
+            String formatName = stampImgPath.substring(stampImgPath.lastIndexOf('.') + 1);//文件名称
+            ImageIO.write(img, formatName, out);
+            PDImageXObject pdImage = PDImageXObject.createFromByteArray(document, out.toByteArray(), formatName);
+            pdImageXObjectList.add(pdImage);
+        }
+        return pdImageXObjectList;
+    }
+
+    private static List<BufferedImage> cutImages(String originalImg, int numBlocks) throws IOException {
+        BufferedImage image = ImageIO.read(new File(originalImg));
+
+        List<BufferedImage> cutImages = new ArrayList<>();
+        int originalWidth = image.getWidth();
+        int originalHeight = image.getHeight();
+
+        int blockSizeWidth = originalWidth / (numBlocks - 1); // 如果numBlocks > 1
+        int blockSizeHeight = originalHeight; // 假设整幅图像高度相同
+
+        for (int i = 0; i < numBlocks - 1; i++) {
+            int x = i * blockSizeWidth;
+            BufferedImage cutImg = image.getSubimage(x, 0, blockSizeWidth, blockSizeHeight);
+            cutImages.add(cutImg);
+        }
+
+        // 处理剩余部分
+        int remainingWidth = originalWidth - (numBlocks - 1) * blockSizeWidth;
+        BufferedImage lastBlock = image.getSubimage(originalWidth - remainingWidth, 0, remainingWidth, blockSizeHeight);
+        cutImages.add(lastBlock);
+
+        return cutImages;
     }
 }
