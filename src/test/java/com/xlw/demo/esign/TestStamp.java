@@ -12,7 +12,7 @@ import java.io.IOException;
 public class TestStamp {
 
     /**
-     * PDFBox库来实现PDF文件的盖章
+     * 使用PDFBox库来实现PDF文件的盖章
      */
     @Test
     public void PdfBoxStampTest() {
@@ -44,5 +44,13 @@ public class TestStamp {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 使用OpenPDF（也称为iText的开源版本）来实现PDF文件盖章
+     */
+    @Test
+    public void OpenPdfStampTest() {
+
     }
 }
