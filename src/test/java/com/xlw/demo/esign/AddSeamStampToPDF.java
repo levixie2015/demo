@@ -20,11 +20,10 @@ import java.util.List;
 public class AddSeamStampToPDF {
     public static void main(String[] args) {
         try (PDDocument document = PDDocument.load(new File("/Users/xieliwei/Desktop/电子签章测试/瑞康医药集团河北有限公司.pdf"))) {
-            // 加载骑缝图章图像  
-            PDImageXObject stampImage = PDImageXObject.createFromFile("/Users/xieliwei/Desktop/电子签章测试/测试章.png", document);
+            String stampImagePath = "/Users/xieliwei/Desktop/电子签章测试/测试章.png";//加载图章图像
 
-//            List<PDImageXObject> pdImageXObjectList = slicingImages(document, "/Users/xieliwei/Desktop/电子签章测试/测试章.png", document.getPages().getCount());//生成骑缝章切割图片
-            List<PDImageXObject> pdImageXObjectList = slicingImages2(document, "/Users/xieliwei/Desktop/电子签章测试/测试章.png", document.getPages().getCount());//生成骑缝章切割图片
+            List<PDImageXObject> pdImageXObjectList = slicingImages(document, stampImagePath, document.getPages().getCount());//生成骑缝章切割图片
+//            List<PDImageXObject> pdImageXObjectList = slicingImages2(document, stampImagePath, document.getPages().getCount());//生成骑缝章切割图片
 
             // 遍历PDF的每一页
             for (int i = 0; i < document.getPages().getCount(); i++) {
