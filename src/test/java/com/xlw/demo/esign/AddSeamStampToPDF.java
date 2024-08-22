@@ -45,11 +45,9 @@ public class AddSeamStampToPDF {
                     // 例如，如果骑缝图章需要跨越两页，并且第一页显示上半部分，第二页显示下半部分并重叠一些  
                     // 你可能需要在第二页上减少y的值并重新计算x以确保对齐
 
-                    PDImageXObject img = pdImageXObjectList.get(i);
-
                     // 这里我们简单地在每页上绘制相同的图像  
 //                    contents.drawImage(pdImageXObjectList.get(i), imgX, imgY, img.getWidth(), img.getHeight());
-                    contents.drawImage(pdImageXObjectList.get(i),imgX,imgY);
+                    contents.drawImage(pdImageXObjectList.get(i), imgX, imgY);
                 }
             }
 
