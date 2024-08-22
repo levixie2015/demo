@@ -156,6 +156,12 @@
             <artifactId>itextpdf</artifactId>
             <version>5.0.6</version>
         </dependency>
+
+<!--        <dependency>-->
+<!--            <groupId>e-iceblue</groupId>-->
+<!--            <artifactId>spire.pdf</artifactId>-->
+<!--            <version>10.8.1</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>e-iceblue</groupId>
             <artifactId>spire.pdf.free</artifactId>
