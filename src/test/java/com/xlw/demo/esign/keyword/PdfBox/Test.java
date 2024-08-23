@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class Test {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         String pdfPath = "/Users/xieliwei/Desktop/电子签章测试/瑞康医药集团河北有限公司.pdf";
         String stampImgPath = "/Users/xieliwei/Desktop/电子签章测试/益通数科章.png";
         String keyWords = "电子签章";
