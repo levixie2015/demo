@@ -26,7 +26,7 @@ public class Test {
             float x = position[0];
             float y = position[1];
             contentStream = new PDPageContentStream(doc, page, PDPageContentStream.AppendMode.APPEND, true);
-            contentStream.drawImage(stampImg, x, y, stampImg.getWidth()/2, stampImg.getHeight()/2);
+            contentStream.drawImage(stampImg, x, y, stampImg.getWidth() / 2, stampImg.getHeight() / 2);
             contentStream.close();
         }
         doc.save("sign_finish.pdf");
