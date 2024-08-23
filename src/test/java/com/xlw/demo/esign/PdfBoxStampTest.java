@@ -35,11 +35,12 @@ public class PdfBoxStampTest {
 
                 // 将印章图像添加到PDF页面
                 contents.drawImage(pdImage, x, y, width * 0.5f, height * 0.5f);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-
             // 保存修改后的PDF
             document.save("/Users/xieliwei/Desktop/电子签章测试/瑞康医药集团河北有限公司_签章.pdf");
-
+            document.close();
             System.out.println("PDF stamped successfully!");
         } catch (IOException e) {
             e.printStackTrace();
