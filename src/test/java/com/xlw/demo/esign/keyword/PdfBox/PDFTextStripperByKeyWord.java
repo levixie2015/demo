@@ -48,8 +48,8 @@ public class PDFTextStripperByKeyWord extends PDFTextStripper {
 
     // 获取坐标信息
     public List<float[]> getCoordinate() throws IOException {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
         try {
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
             document = PDDocument.load(new File(pdfPath));
             int pages = document.getNumberOfPages();
             for (int i = 1; i <= pages; i++) {
@@ -73,6 +73,9 @@ public class PDFTextStripperByKeyWord extends PDFTextStripper {
         } finally {
             if (document != null) {
                 document.close();
+            }
+            if (out != null) {
+                out.close();
             }
         }
         return list;
