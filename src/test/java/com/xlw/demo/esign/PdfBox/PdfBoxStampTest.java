@@ -29,7 +29,7 @@ public class PdfBoxStampTest {
 //        stampByKeyWords(pdfPath, stampImgPath, keyWords, xOffset, yOffset, widthScale, heightScale, compress);
 
         //根据绝对位置图片盖章
-        float x = 49.182f - 100f; // 印章的x坐标
+        float x = 49.182f - 40f; // 印章的x坐标
         float y = 724.82f - 90f; // 印章的y坐标（根据页面大小调整）
         stampByAbsolutePosition(pdfPath, stampImgPath, x, y, widthScale, heightScale, compress);
     }
