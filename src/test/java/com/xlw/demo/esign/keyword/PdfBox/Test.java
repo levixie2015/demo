@@ -16,15 +16,15 @@ public class Test {
 
         String keyWords = "反商业贿赂条款";
         PDImageXObject stampImg = PDImageXObject.createFromFile("/Users/xieliwei/Desktop/电子签章测试/益通数科章.png", doc);
-        PdfBoxKeyWordPosition pdf = new PdfBoxKeyWordPosition(keyWords, pdfPath);
+        PdfBoxKeyWordPosition keyWordPosition = new PdfBoxKeyWordPosition(keyWords, pdfPath);
 
         PDPageContentStream contentStream = null;
-        List<float[]> list = pdf.getCoordinate();
+        List<float[]> keyWordPositionList = keyWordPosition.getCoordinate();
         // 多页pdf的处理
-        for (float[] fs : list) {
-            PDPage page = doc.getPage((int) fs[2] - 1);
-            float x = fs[0];
-            float y = fs[1];
+        for (float[] position : keyWordPositionList) {
+            PDPage page = doc.getPage((int) position[2] - 1);
+            float x = position[0];
+            float y = position[1];
             contentStream = new PDPageContentStream(doc, page, PDPageContentStream.AppendMode.APPEND, true);
             contentStream.drawImage(stampImg, x, y);
             contentStream.close();
