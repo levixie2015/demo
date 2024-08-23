@@ -21,7 +21,7 @@ public class PdfBoxStampTest {
         String keyWords = "电子签章";
 
         //根据关键字图片盖章
-        float xOffset = -100f;//印章的x坐标偏移量
+        float xOffset = -40f;//印章的x坐标偏移量
         float yOffset = -90f;//印章的y坐标偏移量
         float widthScale = 1f;//印章宽度缩放比例
         float heightScale = 1f;//印章高度缩放比例
