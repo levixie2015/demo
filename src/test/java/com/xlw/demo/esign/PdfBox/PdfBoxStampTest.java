@@ -164,7 +164,7 @@ public class PdfBoxStampTest {
 
     private static List<PDImageXObject> slicingImages2(PDDocument document, String path, int n) throws IOException {
         List<PDImageXObject> pdImageXObjectList = new ArrayList<>();
-        BufferedImage[] images = cutImage(document, path, n);
+        BufferedImage[] images = cutImage(path, n);
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         //将图片绘制到PDF页面上的指定位置
         for (int i = 0; i < n; i++) {
@@ -186,21 +186,17 @@ public class PdfBoxStampTest {
      * @return
      * @throws IOException
      */
-    private static BufferedImage[] cutImage(PDDocument document, String path, int num) throws IOException {
-//        String originalImg = "/Users/xieliwei/Desktop/电子签章测试/测试章.png";
+    private static BufferedImage[] cutImage(String path, int num) throws IOException {
         BufferedImage image = ImageIO.read(new File(path));
 
         int rows = 1;
         int cols = num;
 
         int chunks = rows * cols;
-
         int chunkWidth = image.getWidth() / cols;
-
         int chunkHeight = image.getHeight() / rows;
 
         int count = 0;
-
         BufferedImage[] imgs = new BufferedImage[chunks];
 
         for (int x = 0; x < rows; x++) {
