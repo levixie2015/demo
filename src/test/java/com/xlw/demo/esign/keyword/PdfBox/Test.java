@@ -15,14 +15,18 @@ public class Test {
         String stampImgPath = "/Users/xieliwei/Desktop/电子签章测试/益通数科章.png";
         String keyWords = "电子签章";
 
+        //根据关键字图片盖章
         float xOffset = -100f;//印章的x坐标偏移量
         float yOffset = -90f;//印章的y坐标偏移量
         float widthScale = 0.5f;//印章宽度缩放比例
         float heightScale = 0.5f;//印章高度缩放比例
         boolean compress = true;//参数决定了写入的内容是否应该被压缩。如果设置为true，则PDFBox会尝试压缩内容以减少文件大小；如果设置为false，则内容将以未压缩的形式写入。通常，启用压缩是一个好主意，因为它可以减少生成的PDF文件的大小
+//        stampByKeyWords(pdfPath, stampImgPath, keyWords, xOffset, yOffset, widthScale, heightScale, compress);
 
-        //根据关键字图片盖章
-        stampByKeyWords(pdfPath, stampImgPath, keyWords, xOffset, yOffset, widthScale, heightScale, compress);
+        //根据绝对位置图片盖章
+        float x = 100; // 印章的x坐标
+        float y = 700; // 印章的y坐标（根据页面大小调整）
+        stampByAbsolutePosition(pdfPath, stampImgPath, x, y, widthScale, heightScale, compress);
     }
 
     /**
@@ -53,6 +57,43 @@ public class Test {
                 contentStream = new PDPageContentStream(doc, page, PDPageContentStream.AppendMode.APPEND, compress, true);
                 contentStream.drawImage(stampImg, x, y, stampImg.getWidth() * widthScale, stampImg.getHeight() * heightScale);
                 contentStream.close();
+            }
+            doc.save("sign_finish.pdf");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 根据绝对位置图片盖章
+     *
+     * @param pdfPath      pdf文档路径
+     * @param stampImgPath 图片印章路径
+     * @param x            印章的x坐标
+     * @param y            印章的y坐标
+     * @param widthScale   印章宽度缩放比例
+     * @param heightScale  印章高度缩放比例
+     * @param compress     参数决定了写入的内容是否应该被压缩。如果设置为true，则PDFBox会尝试压缩内容以减少文件大小；如果设置为false，则内容将以未压缩的形式写入。通常，启用压缩是一个好主意，因为它可以减少生成的PDF文件的大小
+     */
+    public static void stampByAbsolutePosition(String pdfPath, String stampImgPath, float x, float y, float widthScale, float heightScale, boolean compress) {
+        try (PDDocument doc = PDDocument.load(new File(pdfPath))) {
+            PDImageXObject stampImg = PDImageXObject.createFromFile(stampImgPath, doc);
+
+            // 获取第一页（索引从0开始）
+            PDPage page = doc.getPage(0);
+
+            // 创建一个新的内容流来添加内容
+            try (PDPageContentStream contents = new PDPageContentStream(doc, page, PDPageContentStream.AppendMode.APPEND, true, true)) {
+                // 设置印章图像的位置和尺寸
+                // 注意：PDFBox的坐标系统左下角为原点(0,0)，向右为x轴正方向，向上为y轴正方向
+                // 假设印章图像不需要缩放
+                float width = stampImg.getWidth();
+                float height = stampImg.getHeight();
+
+                // 将印章图像添加到PDF页面
+                contents.drawImage(stampImg, x, y, width * 0.5f, height * 0.5f);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
             doc.save("sign_finish.pdf");
         } catch (IOException e) {
