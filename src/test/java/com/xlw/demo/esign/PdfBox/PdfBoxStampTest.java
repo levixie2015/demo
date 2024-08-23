@@ -3,6 +3,9 @@ package com.xlw.demo.esign.PdfBox;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.encryption.AccessPermission;
+import org.apache.pdfbox.pdmodel.encryption.PDEncryption;
+import org.apache.pdfbox.pdmodel.encryption.StandardProtectionPolicy;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
 import javax.imageio.ImageIO;
@@ -98,6 +101,16 @@ public class PdfBoxStampTest {
                     contentStream.close();
                 }
             }
+
+            //创建一个保护策略，指定用户密码和所有者密码，并设置允许的权限
+//            AccessPermission ap = new AccessPermission();
+//            ap.setCanModify(false); // 禁止修改文档
+//            ap.setCanPrint(false); // 禁止打印
+//            ap.setCanExtractContent(false); // 禁止提取内容
+//            StandardProtectionPolicy policy = new StandardProtectionPolicy("", "", ap);
+//            policy.setEncryptionKeyLength(128);
+//            doc.protect(policy);
+
             doc.save(outPdfPath);
         } catch (IOException e) {
             e.printStackTrace();
