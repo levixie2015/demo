@@ -154,6 +154,15 @@ public class PdfBoxStampTest {
         }
     }
 
+    /**
+     * 图片分隔
+     *
+     * @param document pdf文档
+     * @param path     图章路径
+     * @param n        图章分隔份数
+     * @return
+     * @throws IOException
+     */
     private static List<PDImageXObject> slicingImages(PDDocument document, String path, int n) throws IOException {
         List<PDImageXObject> pdImageXObjectList = new ArrayList<>();
 
@@ -181,7 +190,15 @@ public class PdfBoxStampTest {
         return pdImageXObjectList;
     }
 
-
+    /**
+     * 图片分隔
+     *
+     * @param document pdf文档
+     * @param path     图章路径
+     * @param n        图章分隔份数
+     * @return
+     * @throws IOException
+     */
     private static List<PDImageXObject> slicingImages2(PDDocument document, String path, int n) throws IOException {
         List<PDImageXObject> pdImageXObjectList = new ArrayList<>();
         BufferedImage[] images = cutImage(path, n);
