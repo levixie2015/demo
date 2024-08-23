@@ -14,8 +14,11 @@ public class Test {
         String pdfPath = "/Users/xieliwei/Desktop/电子签章测试/瑞康医药集团河北有限公司.pdf";
         String stampImgPath = "/Users/xieliwei/Desktop/电子签章测试/益通数科章.png";
         String keyWords = "电子签章";
+
         float xOffset = -100f;//印章的x坐标偏移量
         float yOffset = -90f;//印章的y坐标偏移量
+        float widthScale = 0.5f;//印章宽度缩放比例
+        float heightScale = 0.5f;//印章高度缩放比例
 
         try (PDDocument doc = PDDocument.load(new File(pdfPath))) {
             PDImageXObject stampImg = PDImageXObject.createFromFile(stampImgPath, doc);
@@ -30,7 +33,7 @@ public class Test {
                 float x = position[0] + xOffset;
                 float y = position[1] + yOffset;
                 contentStream = new PDPageContentStream(doc, page, PDPageContentStream.AppendMode.APPEND, true, true);
-                contentStream.drawImage(stampImg, x, y, stampImg.getWidth() * 0.5f, stampImg.getHeight() * 0.5f);
+                contentStream.drawImage(stampImg, x, y, stampImg.getWidth() * widthScale, stampImg.getHeight() * heightScale);
                 contentStream.close();
             }
             doc.save("sign_finish.pdf");
