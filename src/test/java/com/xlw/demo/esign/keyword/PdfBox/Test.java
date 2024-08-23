@@ -20,11 +20,15 @@ public class Test {
 
         PDPageContentStream contentStream = null;
         List<float[]> keyWordPositionList = keyWordPosition.getCoordinate();
+
+        float xOffset = -100f;
+        float yOffset = -90f;
+
         // 多页pdf的处理
         for (float[] position : keyWordPositionList) {
             PDPage page = doc.getPage((int) position[2] - 1);
-            float x = position[0];
-            float y = position[1];
+            float x = position[0] + xOffset;
+            float y = position[1] + yOffset;
             contentStream = new PDPageContentStream(doc, page, PDPageContentStream.AppendMode.APPEND, true);
             contentStream.drawImage(stampImg, x, y, stampImg.getWidth() / 2, stampImg.getHeight() / 2);
             contentStream.close();
