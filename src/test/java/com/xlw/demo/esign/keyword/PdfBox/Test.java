@@ -6,6 +6,7 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 public class Test {
@@ -16,25 +17,26 @@ public class Test {
         float xOffset = -100f;//印章的x坐标偏移量
         float yOffset = -90f;//印章的y坐标偏移量
 
-        File file = new File(pdfPath);
-        PDDocument doc = PDDocument.load(file);
-        PDImageXObject stampImg = PDImageXObject.createFromFile(stampImgPath, doc);
-        PDFTextStripperByKeyWord keyWordPosition = new PDFTextStripperByKeyWord(keyWords, pdfPath);
+        try (PDDocument doc = PDDocument.load(new File(pdfPath))) {
+            PDImageXObject stampImg = PDImageXObject.createFromFile(stampImgPath, doc);
+            PDFTextStripperByKeyWord keyWordPosition = new PDFTextStripperByKeyWord(keyWords, pdfPath);
 
-        PDPageContentStream contentStream = null;
-        List<float[]> keyWordPositionList = keyWordPosition.getCoordinate();
+            PDPageContentStream contentStream = null;
+            List<float[]> keyWordPositionList = keyWordPosition.getCoordinate();
 
-        // 多页pdf的处理
-        for (float[] position : keyWordPositionList) {
-            PDPage page = doc.getPage((int) position[2] - 1);
-            float x = position[0] + xOffset;
-            float y = position[1] + yOffset;
-            contentStream = new PDPageContentStream(doc, page, PDPageContentStream.AppendMode.APPEND, true);
-            contentStream.drawImage(stampImg, x, y, stampImg.getWidth() / 2, stampImg.getHeight() / 2);
-            contentStream.close();
+            // 多页pdf的处理
+            for (float[] position : keyWordPositionList) {
+                PDPage page = doc.getPage((int) position[2] - 1);
+                float x = position[0] + xOffset;
+                float y = position[1] + yOffset;
+                contentStream = new PDPageContentStream(doc, page, PDPageContentStream.AppendMode.APPEND, true, true);
+                contentStream.drawImage(stampImg, x, y, stampImg.getWidth() * 0.5f, stampImg.getHeight() * 0.5f);
+                contentStream.close();
+            }
+            doc.save("sign_finish.pdf");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        doc.save("sign_finish.pdf");
-        doc.close();
     }
 
 }

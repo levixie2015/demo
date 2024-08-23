@@ -34,7 +34,7 @@ public class PdfBoxStampTest {
                 float height = pdImage.getHeight();
 
                 // 将印章图像添加到PDF页面
-                contents.drawImage(pdImage, x, y, width/2, height/2);
+                contents.drawImage(pdImage, x, y, width * 0.5f, height * 0.5f);
             }
 
             // 保存修改后的PDF
