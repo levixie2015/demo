@@ -24,8 +24,8 @@ public class PdfBoxStampTest {
 //        stampByKeyWords(pdfPath, stampImgPath, keyWords, xOffset, yOffset, widthScale, heightScale, compress);
 
         //根据绝对位置图片盖章
-        float x = 100; // 印章的x坐标
-        float y = 700; // 印章的y坐标（根据页面大小调整）
+        float x = 10; // 印章的x坐标
+        float y = 500; // 印章的y坐标（根据页面大小调整）
         stampByAbsolutePosition(pdfPath, stampImgPath, x, y, widthScale, heightScale, compress);
     }
 
@@ -79,23 +79,28 @@ public class PdfBoxStampTest {
         try (PDDocument doc = PDDocument.load(new File(pdfPath))) {
             PDImageXObject stampImg = PDImageXObject.createFromFile(stampImgPath, doc);
 
-            // 获取第一页（索引从0开始）
-            PDPage page = doc.getPage(0);
+            //遍历pdf文件
+            for (int i = 0; i < doc.getNumberOfPages(); i++) {
+                //最后一页（索引从0开始）
+                if (i == doc.getNumberOfPages() - 1) {
+                    PDPage page = doc.getPage(i);
 
-            // 创建一个新的内容流来添加内容
-            try (PDPageContentStream contents = new PDPageContentStream(doc, page, PDPageContentStream.AppendMode.APPEND, compress, true)) {
-                // 设置印章图像的位置和尺寸
-                // 注意：PDFBox的坐标系统左下角为原点(0,0)，向右为x轴正方向，向上为y轴正方向
-                // 假设印章图像不需要缩放
-                float width = stampImg.getWidth();
-                float height = stampImg.getHeight();
+                    // 创建一个新的内容流来添加内容
+                    try (PDPageContentStream contents = new PDPageContentStream(doc, page, PDPageContentStream.AppendMode.APPEND, compress, true)) {
+                        // 设置印章图像的位置和尺寸
+                        // 注意：PDFBox的坐标系统左下角为原点(0,0)，向右为x轴正方向，向上为y轴正方向
+                        // 假设印章图像不需要缩放
+                        float width = stampImg.getWidth();
+                        float height = stampImg.getHeight();
 
-                // 将印章图像添加到PDF页面
-                contents.drawImage(stampImg, x, y, width * widthScale, height * heightScale);
-            } catch (IOException e) {
-                e.printStackTrace();
+                        // 将印章图像添加到PDF页面
+                        contents.drawImage(stampImg, x, y, width * widthScale, height * heightScale);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    doc.save("sign_finish.pdf");
+                }
             }
-            doc.save("sign_finish.pdf");
         } catch (IOException e) {
             e.printStackTrace();
         }
