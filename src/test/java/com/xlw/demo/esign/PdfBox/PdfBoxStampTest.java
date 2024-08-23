@@ -111,11 +111,9 @@ public class PdfBoxStampTest {
                     // 对于第一页和最后一页，可能需要特别处理
                     if (i == 0) {
                         System.out.println("对于第一页执行其他特殊处理");
-                        //contents.drawImage(stampImg, 100, 100, stampWidth * widthScale, stamHeight * heightScale);
                         contents.drawImage(perforationImg, perforationImgX, perforationImgY, perforationImg.getWidth(), perforationImg.getHeight());
                     } else if (i == doc.getNumberOfPages() - 1) {
                         System.out.println("对于最后一页执行其他特殊处理");
-                        //contents.drawImage(stampImg, 100, 100, stampWidth * widthScale, stamHeight * heightScale);
                         contents.drawImage(perforationImg, perforationImgX, perforationImgY, perforationImg.getWidth(), perforationImg.getHeight());
                     } else {
                         contents.drawImage(perforationImg, perforationImgX, perforationImgY, perforationImg.getWidth(), perforationImg.getHeight());
