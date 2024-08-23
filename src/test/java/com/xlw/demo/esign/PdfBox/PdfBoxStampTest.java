@@ -83,7 +83,7 @@ public class PdfBoxStampTest {
             PDPage page = doc.getPage(0);
 
             // 创建一个新的内容流来添加内容
-            try (PDPageContentStream contents = new PDPageContentStream(doc, page, PDPageContentStream.AppendMode.APPEND, true, true)) {
+            try (PDPageContentStream contents = new PDPageContentStream(doc, page, PDPageContentStream.AppendMode.APPEND, compress, true)) {
                 // 设置印章图像的位置和尺寸
                 // 注意：PDFBox的坐标系统左下角为原点(0,0)，向右为x轴正方向，向上为y轴正方向
                 // 假设印章图像不需要缩放
@@ -91,7 +91,7 @@ public class PdfBoxStampTest {
                 float height = stampImg.getHeight();
 
                 // 将印章图像添加到PDF页面
-                contents.drawImage(stampImg, x, y, width * 0.5f, height * 0.5f);
+                contents.drawImage(stampImg, x, y, width * widthScale, height * heightScale);
             } catch (IOException e) {
                 e.printStackTrace();
             }
