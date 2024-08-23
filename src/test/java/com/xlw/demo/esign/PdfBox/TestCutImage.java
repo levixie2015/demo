@@ -9,7 +9,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 
-public class TestCut {
+public class TestCutImage {
     public static void main(String[] args) throws IOException {
         String stampImgPath = "/Users/xieliwei/Desktop/电子签章测试/益通数科章.png";
 
