@@ -11,11 +11,12 @@ import java.util.List;
 public class Test {
     public static void main(String[] args) throws Exception {
         String pdfPath = "/Users/xieliwei/Desktop/电子签章测试/瑞康医药集团河北有限公司.pdf";
+        String stampImgPath = "/Users/xieliwei/Desktop/电子签章测试/益通数科章.png";
+        String keyWords = "电子签章";
+
         File file = new File(pdfPath);
         PDDocument doc = PDDocument.load(file);
-
-        String keyWords = "电子签章";
-        PDImageXObject stampImg = PDImageXObject.createFromFile("/Users/xieliwei/Desktop/电子签章测试/益通数科章.png", doc);
+        PDImageXObject stampImg = PDImageXObject.createFromFile(stampImgPath, doc);
         PDFTextStripperByKeyWord keyWordPosition = new PDFTextStripperByKeyWord(keyWords, pdfPath);
 
         PDPageContentStream contentStream = null;
