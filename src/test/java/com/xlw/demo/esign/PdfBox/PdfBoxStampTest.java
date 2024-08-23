@@ -31,7 +31,7 @@ public class PdfBoxStampTest {
         //根据绝对位置图片盖章
         float x = 49.182f - 40f; // 印章的x坐标
         float y = 724.82f - 90f; // 印章的y坐标（根据页面大小调整）
-        stampByAbsolutePosition(pdfPath, stampImgPath, x, y, widthScale, heightScale, compress);
+        stampByAbsolutePosition(pdfPath, stampImgPath, 2, x, y, widthScale, heightScale, compress, true);
     }
 
     /**
@@ -70,17 +70,19 @@ public class PdfBoxStampTest {
     }
 
     /**
-     * 根据绝对位置图片盖章
+     * 根据指定页、绝对位置图片盖章
      *
      * @param pdfPath      pdf文档路径
      * @param stampImgPath 图片印章路径
+     * @param numberOfPage 设置在第几页印章。若大于文件页，则为最后一页
      * @param x            印章的x坐标
      * @param y            印章的y坐标
      * @param widthScale   印章宽度缩放比例
      * @param heightScale  印章高度缩放比例
      * @param compress     参数决定了写入的内容是否应该被压缩。如果设置为true，则PDFBox会尝试压缩内容以减少文件大小；如果设置为false，则内容将以未压缩的形式写入。通常，启用压缩是一个好主意，因为它可以减少生成的PDF文件的大小
+     * @param perforation  是否盖骑缝章
      */
-    public static void stampByAbsolutePosition(String pdfPath, String stampImgPath, float x, float y, float widthScale, float heightScale, boolean compress) {
+    public static void stampByAbsolutePosition(String pdfPath, String stampImgPath, int numberOfPage, float x, float y, float widthScale, float heightScale, boolean compress, boolean perforation) {
         try (PDDocument doc = PDDocument.load(new File(pdfPath))) {
             PDImageXObject stampImg = PDImageXObject.createFromFile(stampImgPath, doc);
 
@@ -89,8 +91,10 @@ public class PdfBoxStampTest {
 
             //遍历pdf文件
             for (int i = 0; i < doc.getPages().getCount(); i++) {
-                //最后一页（索引从0开始）
-//                if (i == doc.getNumberOfPages() - 1) {
+                //若指定页大于文件页，则为最后一页（索引从0开始）
+                if (numberOfPage >= doc.getNumberOfPages() - 1) {
+                    numberOfPage = doc.getNumberOfPages() - 1;
+                }
 
                 PDPage page = doc.getPage(i);
                 float pageWidth = page.getMediaBox().getWidth();
@@ -105,12 +109,14 @@ public class PdfBoxStampTest {
                     float stamHeight = stampImg.getHeight();
 
                     //设置骑缝章
-                    PDImageXObject perforationImg = pdImageXObjectList.get(i);
-                    float perforationImgX = pageWidth - perforationImg.getWidth();
-                    float perforationImgY = pageHeight / 2 - perforationImg.getHeight() / 2; // 这个位置其实是页面中心偏上，但我们可以根据需要调整
-                    contents.drawImage(perforationImg, perforationImgX, perforationImgY, perforationImg.getWidth(), perforationImg.getHeight());
+                    if (perforation) {
+                        PDImageXObject perforationImg = pdImageXObjectList.get(i);
+                        float perforationImgX = pageWidth - perforationImg.getWidth();
+                        float perforationImgY = pageHeight / 2 - perforationImg.getHeight() / 2; // 这个位置其实是页面中心偏上，但我们可以根据需要调整
+                        contents.drawImage(perforationImg, perforationImgX, perforationImgY, perforationImg.getWidth(), perforationImg.getHeight());
+                    }
 
-                    if (i == 2) {
+                    if (i == numberOfPage) {
                         // 将印章图像添加到PDF页面
                         contents.drawImage(stampImg, x, y, stampWidth * widthScale, stamHeight * heightScale);
                     }
