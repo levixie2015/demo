@@ -13,6 +13,8 @@ public class Test {
         String pdfPath = "/Users/xieliwei/Desktop/电子签章测试/瑞康医药集团河北有限公司.pdf";
         String stampImgPath = "/Users/xieliwei/Desktop/电子签章测试/益通数科章.png";
         String keyWords = "电子签章";
+        float xOffset = -100f;//印章的x坐标偏移量
+        float yOffset = -90f;//印章的y坐标偏移量
 
         File file = new File(pdfPath);
         PDDocument doc = PDDocument.load(file);
@@ -21,9 +23,6 @@ public class Test {
 
         PDPageContentStream contentStream = null;
         List<float[]> keyWordPositionList = keyWordPosition.getCoordinate();
-
-        float xOffset = -100f;
-        float yOffset = -90f;
 
         // 多页pdf的处理
         for (float[] position : keyWordPositionList) {
