@@ -14,7 +14,7 @@ public class Test {
         File file = new File(pdfPath);
         PDDocument doc = PDDocument.load(file);
 
-        String keyWords = "反商业贿赂条款";
+        String keyWords = "电子签章";
         PDImageXObject stampImg = PDImageXObject.createFromFile("/Users/xieliwei/Desktop/电子签章测试/益通数科章.png", doc);
         PdfBoxKeyWordPosition keyWordPosition = new PdfBoxKeyWordPosition(keyWords, pdfPath);
 
