@@ -14,7 +14,7 @@ public class Test {
         File file = new File(pdfPath);
         PDDocument doc = PDDocument.load(file);
         String keyWords = "反商业贿赂条款";
-        PDImageXObject pdImage = PDImageXObject.createFromFile("/Users/xieliwei/Desktop/电子签章测试/益通数科章.png", doc);
+        PDImageXObject stampImg = PDImageXObject.createFromFile("/Users/xieliwei/Desktop/电子签章测试/益通数科章.png", doc);
         PdfBoxKeyWordPosition pdf = new PdfBoxKeyWordPosition(keyWords, pdfPath);
         PDPageContentStream contentStream = null;
         List<float[]> list = pdf.getCoordinate();
@@ -25,7 +25,7 @@ public class Test {
             float x = fs[0];
             float y = fs[1];
             contentStream = new PDPageContentStream(doc, page, PDPageContentStream.AppendMode.APPEND, true);
-            contentStream.drawImage(pdImage, x, y);
+            contentStream.drawImage(stampImg, x, y);
             contentStream.close();
         }
         doc.save("sign_finish.pdf");
