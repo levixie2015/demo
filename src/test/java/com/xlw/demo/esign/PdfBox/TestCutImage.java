@@ -11,12 +11,10 @@ import java.io.IOException;
 
 public class TestCutImage {
     public static void main(String[] args) throws IOException {
-        String stampImgPath = "/Users/xieliwei/Desktop/电子签章测试/益通数科章.png";
+        String stampImgPath = "/Users/xieliwei/Desktop/电子签章测试/测试章.png";
 
         Triple<BufferedImage[], Integer, Integer> triple = slicingImages(null, stampImgPath, 5);
         BufferedImage[] bufferedImages = triple.getLeft();
-        Integer w = triple.getMiddle();
-        Integer h = triple.getRight();
 
         for (int i = 0; i < bufferedImages.length; i++) {
             BufferedImage bufferedImage = bufferedImages[i];
