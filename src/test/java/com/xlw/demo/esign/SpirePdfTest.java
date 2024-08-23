@@ -16,10 +16,12 @@ import java.io.IOException;
 public class SpirePdfTest {
 
     public static void main(String[] args) throws IOException {
+        String pdfPath = "/Users/xieliwei/Desktop/电子签章测试/瑞康医药集团河北有限公司.pdf";
+        String outfilePath = "/Users/xieliwei/Desktop/电子签章测试/瑞康医药集团河北有限公司_签章SpirePdf.pdf";
 
         //加载测试文档
         PdfDocument pdf = new PdfDocument();
-        pdf.loadFromFile("/Users/xieliwei/Desktop/电子签章测试/瑞康医药集团河北有限公司.pdf");
+        pdf.loadFromFile(pdfPath);
 
         //获取分割后的印章图片
         BufferedImage[] images = GetImage(pdf.getPages().getCount());
@@ -46,7 +48,7 @@ public class SpirePdfTest {
         }
 
         //保存PDF文档
-        pdf.saveToFile("/Users/xieliwei/Desktop/电子签章测试/瑞康医药集团河北有限公司_签章SpirePdf.pdf");
+        pdf.saveToFile(outfilePath);
 
     }
 
