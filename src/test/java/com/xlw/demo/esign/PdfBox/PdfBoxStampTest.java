@@ -1,4 +1,4 @@
-package com.xlw.demo.esign.keyword.PdfBox;
+package com.xlw.demo.esign.PdfBox;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -9,7 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-public class Test {
+public class PdfBoxStampTest {
     public static void main(String[] args) {
         String pdfPath = "/Users/xieliwei/Desktop/电子签章测试/瑞康医药集团河北有限公司.pdf";
         String stampImgPath = "/Users/xieliwei/Desktop/电子签章测试/益通数科章.png";

@@ -6,7 +6,7 @@ import com.ql.util.express.ExpressRunner;
 import com.ql.util.express.IExpressContext;
 import org.junit.jupiter.api.Test;
 
-public class OperatorTest {
+public class OperatorPdfBoxStampTest {
 
     @Test
     public void addOperatorTest() throws Exception {
