@@ -54,7 +54,7 @@ public class PDFTextStripperByKeyWord extends PDFTextStripper {
         try {
             document = PDDocument.load(new File(pdfPath));
             int pages = document.getNumberOfPages();
-            for (int i = 1; i <= pages; i++) {
+            for (int i = 0; i < pages - 1; i++) {
                 pagelist.clear();
                 super.setSortByPosition(true);
                 super.setStartPage(i);
