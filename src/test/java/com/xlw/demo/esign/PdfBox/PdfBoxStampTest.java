@@ -17,14 +17,14 @@ import java.util.List;
 public class PdfBoxStampTest {
     public static void main(String[] args) {
         String pdfPath = "/Users/xieliwei/Desktop/电子签章测试/瑞康医药集团河北有限公司.pdf";
-        String stampImgPath = "/Users/xieliwei/Desktop/电子签章测试/益通数科章.png";
+        String stampImgPath = "/Users/xieliwei/Desktop/电子签章测试/测试章.png";
         String keyWords = "电子签章";
 
         //根据关键字图片盖章
         float xOffset = -100f;//印章的x坐标偏移量
         float yOffset = -90f;//印章的y坐标偏移量
-        float widthScale = 0.5f;//印章宽度缩放比例
-        float heightScale = 0.5f;//印章高度缩放比例
+        float widthScale = 1f;//印章宽度缩放比例
+        float heightScale = 1f;//印章高度缩放比例
         boolean compress = true;//参数决定了写入的内容是否应该被压缩。如果设置为true，则PDFBox会尝试压缩内容以减少文件大小；如果设置为false，则内容将以未压缩的形式写入。通常，启用压缩是一个好主意，因为它可以减少生成的PDF文件的大小
 //        stampByKeyWords(pdfPath, stampImgPath, keyWords, xOffset, yOffset, widthScale, heightScale, compress);
 
@@ -108,16 +108,7 @@ public class PdfBoxStampTest {
                     PDImageXObject perforationImg = pdImageXObjectList.get(i);
                     float perforationImgX = pageWidth - perforationImg.getWidth();
                     float perforationImgY = pageHeight / 2 - perforationImg.getHeight() / 2; // 这个位置其实是页面中心偏上，但我们可以根据需要调整
-                    // 对于第一页和最后一页，可能需要特别处理
-                    if (i == 0) {
-                        System.out.println("对于第一页执行其他特殊处理");
-                        contents.drawImage(perforationImg, perforationImgX, perforationImgY, perforationImg.getWidth(), perforationImg.getHeight());
-                    } else if (i == doc.getNumberOfPages() - 1) {
-                        System.out.println("对于最后一页执行其他特殊处理");
-                        contents.drawImage(perforationImg, perforationImgX, perforationImgY, perforationImg.getWidth(), perforationImg.getHeight());
-                    } else {
-                        contents.drawImage(perforationImg, perforationImgX, perforationImgY, perforationImg.getWidth(), perforationImg.getHeight());
-                    }
+                    contents.drawImage(perforationImg, perforationImgX, perforationImgY, perforationImg.getWidth(), perforationImg.getHeight());
 
                     if (i == 2) {
                         // 将印章图像添加到PDF页面
