@@ -24,8 +24,8 @@ public class PdfBoxStampTest {
 //        stampByKeyWords(pdfPath, stampImgPath, keyWords, xOffset, yOffset, widthScale, heightScale, compress);
 
         //根据绝对位置图片盖章
-        float x = 10; // 印章的x坐标
-        float y = 500; // 印章的y坐标（根据页面大小调整）
+        float x = 49.182f-100f; // 印章的x坐标
+        float y = 724.82f-90f; // 印章的y坐标（根据页面大小调整）
         stampByAbsolutePosition(pdfPath, stampImgPath, x, y, widthScale, heightScale, compress);
     }
 
@@ -82,7 +82,8 @@ public class PdfBoxStampTest {
             //遍历pdf文件
             for (int i = 0; i < doc.getNumberOfPages(); i++) {
                 //最后一页（索引从0开始）
-                if (i == doc.getNumberOfPages() - 1) {
+//                if (i == doc.getNumberOfPages() - 1) {
+                if (i == 2) {
                     PDPage page = doc.getPage(i);
 
                     // 创建一个新的内容流来添加内容
