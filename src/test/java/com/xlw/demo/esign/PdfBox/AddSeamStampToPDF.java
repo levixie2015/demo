@@ -20,7 +20,7 @@ import java.util.List;
 public class AddSeamStampToPDF {
     public static void main(String[] args) {
         try (PDDocument document = PDDocument.load(new File("/Users/xieliwei/Desktop/电子签章测试/瑞康医药集团河北有限公司.pdf"))) {
-            String stampImagePath = "/Users/xieliwei/Desktop/电子签章测试/测试章.png";//加载图章图像
+            String stampImagePath = "/Users/xieliwei/Desktop/电子签章测试/益通数科章.png";//加载图章图像
 
             List<PDImageXObject> pdImageXObjectList = slicingImages(document, stampImagePath, document.getPages().getCount());//生成骑缝章切割图片
 //            List<PDImageXObject> pdImageXObjectList = slicingImages2(document, stampImagePath, document.getPages().getCount());//生成骑缝章切割图片
