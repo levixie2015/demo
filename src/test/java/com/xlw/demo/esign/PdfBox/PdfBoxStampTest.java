@@ -58,6 +58,10 @@ public class PdfBoxStampTest {
 
             // 多页pdf的处理
             for (int i = 0; i < keyWordPositionList.size(); i++) {
+                //若大于索引，则为最后一个
+                if (keyWordIndex >= keyWordPositionList.size() - 1) {
+                    keyWordIndex = keyWordPositionList.size() - 1;
+                }
                 if (i == keyWordIndex) {
                     float[] position = keyWordPositionList.get(i);
                     PDPage page = doc.getPage((int) position[2] - 1);
