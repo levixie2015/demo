@@ -228,7 +228,6 @@ public class PdfBoxStampTest {
 
         int rows = 1;
         int cols = num;
-
         int chunks = rows * cols;
         int chunkWidth = image.getWidth() / cols;
         int chunkHeight = image.getHeight() / rows;
@@ -237,19 +236,12 @@ public class PdfBoxStampTest {
         BufferedImage[] imgs = new BufferedImage[chunks];
 
         for (int x = 0; x < rows; x++) {
-
             for (int y = 0; y < cols; y++) {
-
                 imgs[count] = new BufferedImage(chunkWidth, chunkHeight, image.getType());
-
                 Graphics2D gr = imgs[count++].createGraphics();
-
                 gr.drawImage(image, 0, 0, chunkWidth, chunkHeight,
-
                         chunkWidth * y, chunkHeight * x,
-
                         chunkWidth * y + chunkWidth, chunkHeight * x + chunkHeight, Color.WHITE, null);
-
                 gr.dispose();
             }
         }
