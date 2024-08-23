@@ -71,6 +71,7 @@ public class PdfBoxStampTest {
 
     /**
      * 根据指定页、绝对位置图片盖章
+     * <p>注意：PDFBox的坐标系统左下角为原点(0,0)，向右为x轴正方向，向上为y轴正方向</p>
      *
      * @param pdfPath      pdf文档路径
      * @param stampImgPath 图片印章路径
@@ -103,8 +104,6 @@ public class PdfBoxStampTest {
                 // 创建一个新的内容流来添加内容
                 try (PDPageContentStream contents = new PDPageContentStream(doc, page, PDPageContentStream.AppendMode.APPEND, compress, true)) {
                     // 设置印章图像的位置和尺寸
-                    // 注意：PDFBox的坐标系统左下角为原点(0,0)，向右为x轴正方向，向上为y轴正方向
-                    // 假设印章图像不需要缩放
                     float stampWidth = stampImg.getWidth();
                     float stamHeight = stampImg.getHeight();
 
