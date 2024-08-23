@@ -19,7 +19,7 @@ public class TestReview {
     public static void pdfToImage(String pdfPath, String outputPath) {
         boolean exist = FileUtil.exist(outputPath);
         if (!exist) {
-            FileUtil.newFile(outputPath);
+            FileUtil.mkdir(outputPath);
         }
         try {
             // 加载PDF文件
