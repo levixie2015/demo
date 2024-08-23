@@ -64,6 +64,25 @@ public class PdfBoxStampTest {
                 contentStream.drawImage(stampImg, x, y, stampImg.getWidth() * widthScale, stampImg.getHeight() * heightScale);
                 contentStream.close();
             }
+
+            //设置骑缝章
+            if (perforation) {
+                List<PDImageXObject> pdImageXObjectList = slicingImages(doc, stampImgPath, doc.getNumberOfPages());//生成骑缝章切割图片
+//            List<PDImageXObject> pdImageXObjectList = slicingImages2(doc, stampImgPath, doc.getPages().getCount());//生成骑缝章切割图片
+                for (int i = 0; i < doc.getPages().getCount(); i++) {
+                    PDPage page = doc.getPage(i);
+                    float pageWidth = page.getMediaBox().getWidth();
+                    float pageHeight = page.getMediaBox().getHeight();
+                    PDImageXObject perforationImg = pdImageXObjectList.get(i);
+                    // 创建一个新的内容流来添加内容
+                    contentStream = new PDPageContentStream(doc, page, PDPageContentStream.AppendMode.APPEND, compress, true);
+
+                    float perforationImgX = pageWidth - perforationImg.getWidth();
+                    float perforationImgY = pageHeight / 2 - perforationImg.getHeight() / 2; // 这个位置其实是页面中心偏上，但我们可以根据需要调整
+                    contentStream.drawImage(perforationImg, perforationImgX, perforationImgY, perforationImg.getWidth(), perforationImg.getHeight());
+                    contentStream.close();
+                }
+            }
             doc.save("sign_finish.pdf");
         } catch (IOException e) {
             e.printStackTrace();
