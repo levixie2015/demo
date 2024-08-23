@@ -26,12 +26,12 @@ public class PdfBoxStampTest {
         float widthScale = 1f;//印章宽度缩放比例
         float heightScale = 1f;//印章高度缩放比例
         boolean compress = true;//参数决定了写入的内容是否应该被压缩。如果设置为true，则PDFBox会尝试压缩内容以减少文件大小；如果设置为false，则内容将以未压缩的形式写入。通常，启用压缩是一个好主意，因为它可以减少生成的PDF文件的大小
-        stampByKeyWords(pdfPath, stampImgPath, keyWords, -1, xOffset, yOffset, widthScale, heightScale, compress, true);
+//        stampByKeyWords(pdfPath, stampImgPath, keyWords, -1, xOffset, yOffset, widthScale, heightScale, compress, true);
 
         //根据绝对位置图片盖章
         float x = 49.182f - 40f; // 印章的x坐标
         float y = 724.82f - 90f; // 印章的y坐标（根据页面大小调整）
-//        stampByAbsolutePosition(pdfPath, stampImgPath, 2, x, y, widthScale, heightScale, compress, true);
+        stampByAbsolutePosition(pdfPath, stampImgPath, 2, x, y, widthScale, heightScale, compress, true);
     }
 
     /**
@@ -127,6 +127,9 @@ public class PdfBoxStampTest {
                 //若指定页大于文件页，则为最后一页（索引从0开始）
                 if (numberOfPage >= doc.getNumberOfPages() - 1) {
                     numberOfPage = doc.getNumberOfPages() - 1;
+                }
+                if (numberOfPage < 0) {
+                    numberOfPage = 0;
                 }
 
                 PDPage page = doc.getPage(i);
