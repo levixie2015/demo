@@ -1,5 +1,6 @@
 package com.xlw.demo.esign.keyword.PdfBox;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.pdfbox.text.TextPosition;
@@ -8,6 +9,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public class PDFTextStripperByKeyWord extends PDFTextStripper {
     // 关键字字符数组
     private char[] key;
@@ -108,7 +110,7 @@ public class PDFTextStripperByKeyWord extends PDFTextStripper {
                     idx[0] = textPositions.get(i).getX() + textPositions.get(i).getFontSize();
                     // Y坐标 在这里减去的字体的长度，也可以直接 idx[1] = textPositions.get(i).getPageHeight()-textPositions.get(i).getY()
                     idx[1] = textPositions.get(i).getPageHeight() - textPositions.get(i).getY() - 4 * textPositions.get(i).getFontSize();
-                    System.out.println("x=" + idx[0] + ",y=" + idx[1]);
+                    log.info("x={},y={}", idx[0], idx[1]);
                     pagelist.add(idx);
                 }
             }
