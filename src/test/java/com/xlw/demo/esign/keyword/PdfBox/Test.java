@@ -16,7 +16,7 @@ public class Test {
 
         String keyWords = "电子签章";
         PDImageXObject stampImg = PDImageXObject.createFromFile("/Users/xieliwei/Desktop/电子签章测试/益通数科章.png", doc);
-        PdfBoxKeyWordPosition keyWordPosition = new PdfBoxKeyWordPosition(keyWords, pdfPath);
+        PDFTextStripperByKeyWord keyWordPosition = new PDFTextStripperByKeyWord(keyWords, pdfPath);
 
         PDPageContentStream contentStream = null;
         List<float[]> keyWordPositionList = keyWordPosition.getCoordinate();

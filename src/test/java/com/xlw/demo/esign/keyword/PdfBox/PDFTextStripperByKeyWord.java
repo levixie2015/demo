@@ -8,7 +8,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PdfBoxKeyWordPosition extends PDFTextStripper {
+public class PDFTextStripperByKeyWord extends PDFTextStripper {
     // 关键字字符数组
     private char[] key;
     // PDF文件路径
@@ -19,7 +19,7 @@ public class PdfBoxKeyWordPosition extends PDFTextStripper {
     private List<float[]> pagelist = new ArrayList<float[]>();
 
     // 有参构造方法
-    public PdfBoxKeyWordPosition(String keyWords, String pdfPath) throws IOException {
+    public PDFTextStripperByKeyWord(String keyWords, String pdfPath) throws IOException {
         super();
         super.setSortByPosition(true);
         this.pdfPath = pdfPath;
