@@ -110,7 +110,7 @@ public class PdfBoxStampTest {
 //            StandardProtectionPolicy policy = new StandardProtectionPolicy("", "", ap);
 //            policy.setEncryptionKeyLength(128);
 //            doc.protect(policy);
-
+            doc.getCurrentAccessPermission().setReadOnly();
             doc.save(outPdfPath);
         } catch (IOException e) {
             e.printStackTrace();
