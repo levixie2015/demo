@@ -21,8 +21,6 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
- * <p>Java Keytool：生成数字证书(.cer/.p12文件)的实践指南: https://developer.baidu.com/article/details/3311057</p>
- *
  * @author bao
  * @date 2024/3/20 16:10
  */

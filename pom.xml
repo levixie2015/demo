@@ -157,15 +157,27 @@
             <version>5.0.6</version>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>e-iceblue</groupId>-->
-<!--            <artifactId>spire.pdf</artifactId>-->
-<!--            <version>10.8.1</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>e-iceblue</groupId>-->
+        <!--            <artifactId>spire.pdf</artifactId>-->
+        <!--            <version>10.8.1</version>-->
+        <!--        </dependency>-->
         <dependency>
             <groupId>e-iceblue</groupId>
             <artifactId>spire.pdf.free</artifactId>
             <version>9.12.3</version>
+        </dependency>
+
+        <!-- 如果你需要处理签名，确保添加这个依赖 -->
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk15on</artifactId>
+            <version>1.68</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcpkix-jdk15on</artifactId>
+            <version>1.68</version>
         </dependency>
     </dependencies>
 
