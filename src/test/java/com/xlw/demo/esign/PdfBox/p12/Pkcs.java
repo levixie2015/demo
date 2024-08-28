@@ -86,7 +86,6 @@ public class Pkcs {
      */
     public static Certificate generateCertificateV3(String issuerStr, String subjectStr, KeyPair keyPair, Map<String, byte[]> result,
                                                     String certificateCRL, List<Extension> extensions) {
- 
         ByteArrayInputStream bout = null;
         X509Certificate cert = null;
         try {
