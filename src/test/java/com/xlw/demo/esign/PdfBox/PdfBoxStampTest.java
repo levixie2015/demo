@@ -3,10 +3,10 @@ package com.xlw.demo.esign.PdfBox;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.encryption.AccessPermission;
-import org.apache.pdfbox.pdmodel.encryption.PDEncryption;
-import org.apache.pdfbox.pdmodel.encryption.StandardProtectionPolicy;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
+import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotation;
+import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotationWidget;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -80,6 +80,8 @@ public class PdfBoxStampTest {
                     contentStream = new PDPageContentStream(doc, page, PDPageContentStream.AppendMode.APPEND, compress, true);
                     contentStream.drawImage(stampImg, x, y, stampImg.getWidth() * widthScale, stampImg.getHeight() * heightScale);
                     contentStream.close();
+                    //并设置图片盖章的不可编辑性
+                    setReadOnly(page, x, y, stampImg.getWidth() * widthScale, stampImg.getHeight() * heightScale);
                 }
             }
 
@@ -99,18 +101,12 @@ public class PdfBoxStampTest {
                     float perforationImgY = pageHeight / 2 - perforationImg.getHeight() / 2; // 这个位置其实是页面中心偏上，但我们可以根据需要调整
                     contentStream.drawImage(perforationImg, perforationImgX, perforationImgY, perforationImg.getWidth(), perforationImg.getHeight());
                     contentStream.close();
+
+                    //并设置图片盖章的不可编辑性
+                    setReadOnly(page, perforationImgX, perforationImgY, perforationImg.getWidth(), perforationImg.getHeight());
                 }
             }
 
-            //创建一个保护策略，指定用户密码和所有者密码，并设置允许的权限
-//            AccessPermission ap = new AccessPermission();
-//            ap.setCanModify(false); // 禁止修改文档
-//            ap.setCanPrint(false); // 禁止打印
-//            ap.setCanExtractContent(false); // 禁止提取内容
-//            StandardProtectionPolicy policy = new StandardProtectionPolicy("", "", ap);
-//            policy.setEncryptionKeyLength(128);
-//            doc.protect(policy);
-            doc.getCurrentAccessPermission().setReadOnly();
             doc.save(outPdfPath);
         } catch (IOException e) {
             e.printStackTrace();
@@ -180,6 +176,29 @@ public class PdfBoxStampTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 通过将图片作为注释（annotation）添加到 PDF 文档中，并设置该注释为不可编辑来实现图片盖章的不可编辑性
+     *
+     * @param page   pdf当前页
+     * @param x      x坐标
+     * @param y      y坐标
+     * @param width  宽度
+     * @param height 高度
+     * @throws IOException
+     */
+    private static void setReadOnly(PDPage page, float x, float y, float width, float height) throws IOException {
+        // 获取页面的注释列表
+        List<PDAnnotation> annotations = page.getAnnotations();
+        // 创建一个新的注释
+        PDAnnotationWidget widget = new PDAnnotationWidget();
+        PDRectangle pdRectangle = new PDRectangle(x, y, width, height);
+        widget.setRectangle(pdRectangle);
+        // 设置注释为不可编辑
+        widget.setReadOnly(true);
+        // 添加注释到页面
+        annotations.add(widget);
     }
 
     /**
