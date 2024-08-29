@@ -19,8 +19,8 @@ import java.util.Enumeration;
  */
 public class P12ToKeysAndCerts {
     public static void main(String[] args) throws Exception {
-        String p12FilePath = "./src/main/resources/ibright.p12"; // P12文件路径
-        String password = "ibright2014"; // P12文件密码
+        String p12FilePath = "./src/main/resources/mytest.p12"; // P12文件路径
+        String password = "123456abc"; // P12文件密码
 
         // 加载P12文件
         KeyStore keyStore = KeyStore.getInstance("PKCS12");
