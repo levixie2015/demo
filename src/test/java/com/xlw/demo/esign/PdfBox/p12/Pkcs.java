@@ -183,7 +183,7 @@ public class Pkcs {
         // ST: 州或省份名称  C: 单位的两字母国家代码
         String issuerStr = "CN=ibright.com,OU=ibright.com,O=ibright.com,C=CN,E=bnmjstu@ibright.com,L=BeiJin,ST=BeiJin";
         String subjectStr = "CN=ibright.com,OU=ibright.com,O=ibright.com,C=CN,E=bnmjstu@ibright.com,L=BeiJin,ST=BeiJin";
-        String certificateCRL = "https://www.ibright.com/";
+        String certificateCRL = "https://www.baidu.com/";
 
         //创建证书
         Map<String, byte[]> result = createCert("ibright2014", issuerStr, subjectStr, certificateCRL);
