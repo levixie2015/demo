@@ -1,4 +1,4 @@
-package com.xlw.demo.esign.PdfBox.p12;
+package com.xlw.demo.p12;
 
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.ASN1Primitive;
