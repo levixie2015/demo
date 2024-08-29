@@ -181,21 +181,22 @@ public class Pkcs {
         // CN: 名字与姓氏    OU : 组织单位名称
         // O ：组织名称  L : 城市或区域名称  E : 电子邮件
         // ST: 州或省份名称  C: 单位的两字母国家代码
-        String issuerStr = "CN=ibright.com,OU=ibright.com,O=ibright.com,C=CN,E=bnmjstu@ibright.com,L=BeiJin,ST=BeiJin";
-        String subjectStr = "CN=ibright.com,OU=ibright.com,O=ibright.com,C=CN,E=bnmjstu@ibright.com,L=BeiJin,ST=BeiJin";
-        String certificateCRL = "https://www.baidu.com/";
+        String issuerStr = "CN=mytest.com,OU=mytest.com,O=mytest.com,C=CN,E=bnmjstu@mytest.com,L=BeiJin,ST=BeiJin";
+        String subjectStr = "CN=mytest.com,OU=mytest.com,O=mytest.com,C=CN,E=bnmjstu@mytest.com,L=BeiJin,ST=BeiJin";
+        String certificateCRL = "https://www.mytest.com/";
+        String password = "123456abc";
 
         //创建证书
-        Map<String, byte[]> result = createCert("ibright2014", issuerStr, subjectStr, certificateCRL);
+        Map<String, byte[]> result = createCert(password, issuerStr, subjectStr, certificateCRL);
 
         //获取资源文件路径
         String resourcePath = "./src/main/resources/";
 
-        FileOutputStream outPutStream = new FileOutputStream(resourcePath + "./ibright.p12"); // ca.jks
+        FileOutputStream outPutStream = new FileOutputStream(resourcePath + "./mytest.p12"); // ca.jks
         outPutStream.write(result.get("keyStoreData"));
         outPutStream.close();
 
-        FileOutputStream fos = new FileOutputStream(new File(resourcePath + "./ibright.cer"));
+        FileOutputStream fos = new FileOutputStream(new File(resourcePath + "./mytest.cer"));
         fos.write(result.get("certificateData"));
         fos.flush();
         fos.close();
